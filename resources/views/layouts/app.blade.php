@@ -60,6 +60,8 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('cabinet') }}">{{__('Cabinet')}}</a>
+                                    <a class="dropdown-item" href="{{ route('admin.home') }}">{{__('Admin')}}</a>
 
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -79,7 +81,6 @@
                 @section('breadcrumbs')
                     {{ Breadcrumbs::render() }}
                 @show
-
                 @include('layouts.partials.flash')
                 @yield('content')
             </div>

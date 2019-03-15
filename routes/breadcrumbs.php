@@ -32,5 +32,9 @@ Breadcrumbs::register('cabinet', function (BreadcrumbsGenerator $crumbs) {
     $crumbs->push('Cabinet', route('cabinet'));
 });
 
+Breadcrumbs::register('admin.home', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->push('Admin', route('admin.home'));
+});
+
 
 
