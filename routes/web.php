@@ -17,7 +17,7 @@ Route::group(
     ],
     function () {
         Route::get('/', 'HomeController@index')->name('home');
-        Route::resource('users', 'HomeController');
+        Route::resource('users', 'UsersController');
     }
 );
 

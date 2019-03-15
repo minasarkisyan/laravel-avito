@@ -1,10 +1,5 @@
 @extends('layouts.app')
 
-@section('breadcrumbs')
-@endsection
-
 @section('content')
-    <ul class="nav nav-tabs mb-3">
-        <li class="nav-item"><a class="nav-link active" href="{{ route('admin.home') }}">Dashboard</a></li>
-    </ul>
+    @include('admin._nav', ['page' => ''])
 @endsection
