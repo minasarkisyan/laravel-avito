@@ -20,8 +20,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-
-        <nav class="navbar navbar-expand-md navbar-dark-color navbar-dark-hover-color">
+    <header>
+        <nav class="navbar-dark-color navbar-expand-md navbar-dark-hover-color navbar">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Adverts') }}
@@ -72,9 +72,15 @@
                 </div>
             </div>
         </nav>
+    </header>
 
         <main class="app-content py-4">
             <div class="container">
+                @section('breadcrumbs')
+                    {{ Breadcrumbs::render() }}
+                @show
+
+                @include('layouts.partials.flash')
                 @yield('content')
             </div>
         </main>

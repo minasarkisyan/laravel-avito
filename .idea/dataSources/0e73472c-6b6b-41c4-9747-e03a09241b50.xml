@@ -5323,19 +5323,40 @@
       <DefaultExpression>&apos;NULL&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="1203" parent="406" name="users_email_unique">
+    <column id="1203" parent="406" name="status">
+      <Position>9</Position>
+      <DataType>varchar(16)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="1204" parent="406" name="verify_token">
+      <Position>10</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <DefaultExpression>&apos;NULL&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="1205" parent="406" name="users_email_unique">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="1204" parent="406" name="PRIMARY">
+    <index id="1206" parent="406" name="users_verify_token_unique">
+      <ColNames>verify_token</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="1207" parent="406" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="1205" parent="406" name="users_email_unique">
+    <key id="1208" parent="406" name="users_email_unique">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>users_email_unique</UnderlyingIndexName>
+    </key>
+    <key id="1209" parent="406" name="users_verify_token_unique">
+      <ColNames>verify_token</ColNames>
+      <UnderlyingIndexName>users_verify_token_unique</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>
