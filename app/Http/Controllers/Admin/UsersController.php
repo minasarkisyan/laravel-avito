@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\Users\CreateRequest;
+use App\Http\Requests\Admin\Users\UpdateRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\UseCases\Auth\RegisterService;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,9 +15,16 @@ use Illuminate\Support\Str;
 class UsersController extends Controller
 {
 
+    private $register;
+
+    public function __construct(RegisterService $register)
+    {
+        $this->register = $register;
+    }
+
     public function index()
     {
-        $users = User::orderByDesc('id')->paginate(20);
+        $users = User::orderBy('id')->paginate(20);
 
         return view('admin.users.index', compact('users'));
 
@@ -26,18 +37,13 @@ class UsersController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users'
-        ]);
 
-        $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'status' => User::STATUS_ACTIVE
-        ]);
+        $user = User::new(
+            $request['name'],
+            $request['email']
+        );
 
         return redirect()->route('admin.users.show', $user);
     }
@@ -60,15 +66,10 @@ class UsersController extends Controller
         return view('admin.users.edit', compact('user', 'statuses'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(UpdateRequest $request, User $user)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,id,' .$user->id,
-            'status' => ['required', 'string', Rule::in([User::STATUS_WAIT, User::STATUS_ACTIVE])]
-        ]);
 
-        $user->update($data);
+        $user->update($request->only(['name', 'email']));
 
         return redirect()->route('admin.users.show', $user);
     }
@@ -79,5 +80,12 @@ class UsersController extends Controller
         $user->delete($user);
 
         return redirect()->route('admin.users.index');
+    }
+
+    public function verify(User $user)
+    {
+        $this->register->verify($user->id);
+
+        return redirect()->route('admin.users.show', $user);
     }
 }

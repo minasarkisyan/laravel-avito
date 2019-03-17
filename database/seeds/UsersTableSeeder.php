@@ -1,7 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: postp
- * Date: 16.03.2019
- * Time: 16:04
- */
+
+use App\User;
+use Illuminate\Database\Seeder;
+
+class UsersTableSeeder extends Seeder
+{
+    public function run(): void
+    {
+        factory(User::class, 10)->create();
+    }
+}
