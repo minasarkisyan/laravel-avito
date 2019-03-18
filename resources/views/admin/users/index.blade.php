@@ -3,6 +3,12 @@
 @section('content')
     @include('admin._nav')
 
+    <form method="GET" action="{{ route('admin.users.create') }}" class="mr-1">
+        @csrf
+        <button class="btn btn-primary mb-1">Add user</button>
+    </form>
+
+
     <table class="table table-bordered table-striped">
         <thead>
         <tr>

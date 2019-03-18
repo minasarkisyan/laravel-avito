@@ -9,7 +9,7 @@
         @if ($user->isWait())
             <form method="POST" action="{{ route('admin.users.verify', $user) }}" class="mr-1">
                 @csrf
-                <button class="btn btn-danger">Verify</button>
+                <button class="btn btn-success">Verify</button>
             </form>
         @endif
         
