@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('admin._nav', ['page' => ''])
+    @include('admin.users._nav', ['page' => ''])
 @endsection
