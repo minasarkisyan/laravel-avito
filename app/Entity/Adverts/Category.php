@@ -1,7 +1,24 @@
 <?php
+
+namespace App\Entity\Adverts;
+
+use Illuminate\Database\Eloquent\Model;
+use Kalnoy\Nestedset\NodeTrait;
+
 /**
- * Created by PhpStorm.
- * User: postp
- * Date: 18.03.2019
- * Time: 20:28
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property int|null $parent_id
+ *
+ * @property int $depth
+ * @property Category $parent
+ * @property Category[] $children
  */
+class Category extends Model
+{
+    use NodeTrait;
+    protected $table = 'advert_categories';
+    public $timestamps = false;
+    protected $fillable = ['name', 'slug', 'parent_id'];
+}
