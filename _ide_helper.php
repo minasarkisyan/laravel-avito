@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.4 on 2019-03-18 18:31:20.
+ * Generated for Laravel 5.8.5 on 2019-03-20 18:36:17.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -3959,6 +3959,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Set the database reconnector callback.
+         *
+         * @param callable $reconnector
+         * @return void 
+         * @static 
+         */ 
+        public static function setReconnector($reconnector)
+        {
+                        /** @var \Illuminate\Database\DatabaseManager $instance */
+                        $instance->setReconnector($reconnector);
+        }
+        
+        /**
          * Get a schema builder instance for the connection.
          *
          * @return \Illuminate\Database\Schema\MySqlBuilder 
@@ -4394,20 +4407,6 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Illuminate\Database\Connection            
                         /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setReadPdo($pdo);
-        }
-        
-        /**
-         * Set the reconnect instance on the connection.
-         *
-         * @param callable $reconnector
-         * @return \Illuminate\Database\MySqlConnection 
-         * @static 
-         */ 
-        public static function setReconnector($reconnector)
-        {
-            //Method inherited from \Illuminate\Database\Connection            
-                        /** @var \Illuminate\Database\MySqlConnection $instance */
-                        return $instance->setReconnector($reconnector);
         }
         
         /**
@@ -5768,6 +5767,20 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\Auth\Access\Gate $instance */
                         return $instance->any($abilities, $arguments);
+        }
+        
+        /**
+         * Determine if all of the given abilities should be denied for the current user.
+         *
+         * @param \Illuminate\Auth\Access\iterable|string $abilities
+         * @param array|mixed $arguments
+         * @return bool 
+         * @static 
+         */ 
+        public static function none($abilities, $arguments = array())
+        {
+                        /** @var \Illuminate\Auth\Access\Gate $instance */
+                        return $instance->none($abilities, $arguments);
         }
         
         /**

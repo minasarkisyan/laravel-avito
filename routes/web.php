@@ -3,9 +3,33 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/cabinet', 'Cabinet\HomeController@index')->name('cabinet');
+Route::get('/', 'MainController@index')->name('home');
+Route::get('/login/phone', 'Auth\LoginController@phone')->name('login.phone');
+Route::post('/login/phone', 'Auth\LoginController@verify');
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('register.verify');
+
+Route::group(
+    [
+        'prefix' => 'cabinet',
+        'as' => 'cabinet.',
+        'namespace' => 'Cabinet',
+        'middleware' => ['auth'],
+    ],
+    function () {
+        Route::get('/', 'HomeController@index')->name('home');
+        Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
+            Route::get('/', 'ProfileController@index')->name('home');
+            Route::get('/edit', 'ProfileController@edit')->name('edit');
+            Route::put('/update', 'ProfileController@update')->name('update');
+            Route::post('/phone', 'PhoneController@request');
+            Route::get('/phone', 'PhoneController@form')->name('phone');
+            Route::put('/phone', 'PhoneController@verify')->name('phone.verify');
+            Route::post('/phone/auth', 'PhoneController@auth')->name('phone.auth');
+        });
+
+        Route::resource('adverts', 'Adverts\AdvertController');
+    }
+);
 
 Route::group(
     [
@@ -23,10 +47,13 @@ Route::group(
 
         Route::group(['prefix' => 'adverts', 'as' => 'adverts.', 'namespace' => 'Adverts'], function () {
             Route::resource('categories', 'CategoryController');
-            Route::post('/categories/{category}/first', 'CategoryController@first')->name('categories.first');
-            Route::post('/categories/{category}/up', 'CategoryController@up')->name('categories.up');
-            Route::post('/categories/{category}/down', 'CategoryController@down')->name('categories.down');
-            Route::post('/categories/{category}/last', 'CategoryController@last')->name('categories.last');
+            Route::group(['prefix' => 'categories/{category}', 'as' => 'categories.'], function () {
+                Route::post('/first', 'CategoryController@first')->name('first');
+                Route::post('/up', 'CategoryController@up')->name('up');
+                Route::post('/down', 'CategoryController@down')->name('down');
+                Route::post('/last', 'CategoryController@last')->name('last');
+                Route::resource('attributes', 'AttributeController')->except('index');
+            });
         });
     }
 );
